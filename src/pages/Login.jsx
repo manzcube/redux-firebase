@@ -3,9 +3,13 @@ import FormInput from '../components/FormInput'
 import Alert from '../components/Alert'
 import Button from '../components/Button'
 import { Link } from 'react-router-dom'
+import { toast } from 'react-toastify'
+import { useDispatch } from 'react-redux'
+import { signin } from '../services/auth/authSlice'
 
 const Login = () => {
   //Declare Hooks varibles
+  const dispatch = useDispatch()
   const [error, setError] = useState() //This si at the time of catching error, save them in this variable
   const [formData, setFormData] = useState({
     email: '',
@@ -22,9 +26,17 @@ const Login = () => {
      }))
   }
 
-  const onSubmit = e => {
+  const onSubmit = e => { // If the user doesn't exists, redirect to register
     e.preventDefault()
-    console.log(formData)
+    try {
+      const userData = {
+        email, 
+        password
+      }
+      dispatch(signin(userData)) 
+    } catch (err) {
+      toast.error(err.message)
+    }
   }
 
   return (

@@ -24,7 +24,7 @@ const Register = () => {
   const dispatch = useDispatch()
 
   const { user, isLoading, isError, isSuccess, message } = useSelector((state) => state.auth)
-  console.log('This is user from the store in register page:', user)
+  console.log('This is user from the store in register page:', { user, isLoading, isError, isSuccess, message })
 
   useEffect(() => {
     if(isError) {
@@ -55,7 +55,7 @@ const Register = () => {
         email, 
         password,
       }
-      dispatch(register(userData))
+      dispatch(register(userData)) //If the user already exists, navigate to login 
     }
   }
 
